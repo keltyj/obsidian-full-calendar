@@ -8,20 +8,28 @@ jobs:
             - uses: actions/checkout@v2
               with:
                   ref: ${{ github.head_ref }}
+            - uses: pnpm/action-setup@v4
+              with:
+                  version: 9
             - uses: actions/setup-node@v2
               with:
                   node-version: "16.x"
-            - run: npm ci --legacy-peer-deps
-            - run: npm run lint
-            - run: npm run compile
+                  cache: "pnpm"
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run lint
+            - run: pnpm run compile
     tests:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
               with:
                   ref: ${{ github.head_ref }}
+            - uses: pnpm/action-setup@v4
+              with:
+                  version: 9
             - uses: actions/setup-node@v2
               with:
                   node-version: "16.x"
-            - run: npm ci --legacy-peer-deps
-            - run: npm run test
+                  cache: "pnpm"
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run test
